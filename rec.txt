@@ -1,0 +1,50 @@
+- Rancang Dashboard untuk pendaftaran dan pengumpulan berbagai event:
+> Bisa file upload (setidaknya foto (digunakan utk bukti pembayaran) - kalau bisa kompresi gambar lebih baik)
+> Layar utama dashboard berisi pengumuman dan link ke:
+* Pendaftaran event
+* Pelengkapan profil
+> Dashboard IFest 8 dan 9: https://github.com/ifest-uajy/dashboard
+
+- Gambar/grafik yang tidak bisa/tidak ada di internet atau custom design dibuat dgn kerja sama dnegan bidang muldok
+
+light theme
+#57a0bb - primary
+#608999 - active
+rgb(191 243 251 / 45%) - box shadow
+
+dark theme
+#65afcb - primary
+rgb(174 231 247 / 31%) - box shadow
+
+
+
+    <section class="log_cs d-flex justify-content-center text-white">
+        <div class="card card_cloverleaf px-5 pb-5 pt-5">
+            <h3 class="title_card_cloverleaf mt-7">Masuk</h3>
+            <h4 class="subtitle_card_cloverleaf">Informatics Festival (IFest) #10</h4>
+
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form__group field">
+                    <input type="email" class="form__field" placeholder="Email" name="email" id='email' required />
+                    <span class="underline"></span>
+                    <label for="email" class="form__label">Email</label>
+                </div>
+                <div class="form__group field mt-3">
+                    <input type="password" class="form__field" placeholder="Password" name="password" id='password' required />
+                    <span class="underline"></span>
+                    <label for="password" class="form__label">Password</label>
+                </div>
+
+                <div class="option_chc mt-3">
+                    <a href="/forgot-password" class="link_clover">Lupa password?</a><br>
+                    <a href="/register" class="link_clover">Belum punya akun?</a><br>
+                    <a href="/resend-verify-email" class="link_clover">Kirim ulang email aktivasi?</a>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn_log_in text-white mt-3 fw-bold">Masuk</button>
+                </div>
+            </form>
+        </div>
+    </section>
