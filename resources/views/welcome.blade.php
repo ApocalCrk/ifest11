@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>Informatics Festival #10</title>
+        <title>Informatics Festival #11</title>
         <link rel="stylesheet" href="{{ asset('landingpage_/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('landingpage_/css/custom.css') }}">
         <link rel="shortcut icon" href="{{ asset('images/ifest.png') }}" type="image/x-icon">
@@ -30,13 +30,13 @@
             <div class="d-flex justify-content-center">
                 <section class="section_tp_ifst fst align-content-center">
                     <img src="{{ asset('landingpage_/images/Innovation _Monochromatic.svg') }}" alt="Icon">
-                    <h1 class="text-white fst-italic text-center mt-2">Informatics Festival #10</h1>
+                    <h1 class="text-white fst-italic text-center mt-2">Informatics Festival #11</h1>
                 </section>
             </div>
             <br>
             <div class="d-flex justify-content-center">
                 <section class="section_tp_ifst fst_btn">
-                    <h5 class="text-white text-center wlcm_ifst">Selamat datang di Sistem Registrasi Kompetisi Informatics Festival (IFest) #10.</h5>
+                    <h5 class="text-white text-center wlcm_ifst">Selamat datang di Sistem Registrasi Kompetisi Informatics Festival (IFest) #11.</h5>
                     <div class="btn_log_reg d-flex justify-content-center">
                         @auth
                             <a href="masuk" class="text-white btn_fst_log_reg">Dashboard</a>
