@@ -72,7 +72,6 @@
 
                                         <div class="column is-6">
                                             <h3 class="dark-inverted"><b>Lomba Yang Diikuti</b></h3>
-                                            <h3><b class="is-dark-primary is-bold"></b></h3>
                                             <div class="dashboard-card mt-2">
                                                 @if(count($data_lomba)>0)
                                                 @foreach($data_lomba as $data)
@@ -101,6 +100,38 @@
                                                         <p>{{ __('Kamu tidak mengikuti lomba apapun.') }}</p>
                                                     </div>
                                                 @endif
+                                            </div>
+
+                                            <h3 class="dark-inverted is-6 mb-1"><b>Timeline</b></h3>
+                                            <div class="list-widget list-widget-v3 is-straight">
+
+                                                <div class="inner-list">
+                                                    <div class="icon-timeline">
+                                                        @php
+                                                            $rand_color = ['is-primary', 'is-info', 'is-success', 'is-orange', 'is-yellow']
+                                                        @endphp
+                                                        @foreach($timeline as $item)
+                                                        <!--Timeline item-->
+                                                        <div class="timeline-item">
+                                                            <div class="timeline-icon is-squared {{ $rand_color[array_rand($rand_color)] }}">
+                                                                <i data-feather="{{$item->icon}}"></i>
+                                                            </div>
+                                                            <div class="timeline-content">
+                                                                <p>@php print_r($item->timeline) @endphp</p>
+                                                                <span>{{ \Carbon\Carbon::create($item->start)->format('d M Y') }} @if($item->close != null) - {{ \Carbon\Carbon::create($item->close)->format('d M Y') }} @endif<br> 
+                                                                @if($item->close != null)
+                                                                    @if(now() >= $item->start && now() <= $item->close)            
+                                                                        ( Sedang Berlangsung )
+                                                                    @endif
+                                                                @elseif(Carbon\Carbon::now()->format('Y-m-d') == $item->start)
+                                                                    ( Sedang Berlangsung )
+                                                                @endif
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -212,39 +243,6 @@
                                         </table>
                                     </div>
                                     
-                                    <div class="list-widget list-widget-v3 is-straight">
-                                        <div class="widget-head">
-                                            <h3 class="dark-inverted">Timeline</h3>
-                                        </div>
-
-                                        <div class="inner-list">
-                                            <div class="icon-timeline">
-                                                @php
-                                                    $rand_color = ['is-primary', 'is-info', 'is-success', 'is-orange', 'is-yellow']
-                                                @endphp
-                                                @foreach($timeline as $item)
-                                                <!--Timeline item-->
-                                                <div class="timeline-item">
-                                                    <div class="timeline-icon is-squared {{ $rand_color[array_rand($rand_color)] }}">
-                                                        <i data-feather="{{$item->icon}}"></i>
-                                                    </div>
-                                                    <div class="timeline-content">
-                                                        <p>@php print_r($item->timeline) @endphp</p>
-                                                        <span>{{ \Carbon\Carbon::create($item->start)->format('d M Y') }} @if($item->close != null) - {{ \Carbon\Carbon::create($item->close)->format('d M Y') }} @endif<br> 
-                                                        @if($item->close != null)
-                                                            @if(now() >= $item->start && now() <= $item->close)            
-                                                                ( Sedang Berlangsung )
-                                                            @endif
-                                                        @elseif(Carbon\Carbon::now()->format('Y-m-d') == $item->start)
-                                                            ( Sedang Berlangsung )
-                                                        @endif
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>  
                                 </div>
 
                             </div>

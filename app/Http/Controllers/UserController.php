@@ -69,7 +69,7 @@ class UserController extends Controller
                 $nullvalue += 1;
             }
         }
-        $timeline = Timeline::where('start', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
+        $timeline = Timeline::where('start', '<=', now())->where('close', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
         return view('user_.dashboard', compact('nullvalue', 'data_lomba', 'timeline'));
     }
 

@@ -31,7 +31,7 @@
                     <div class="inner-wrap">
                         <!--Form Title-->
                         <div class="auth-head">
-                            <h2>Informatics Festival #10</h2>
+                            <h2>Informatics Festival #11</h2>
                             <p>Lupa Password</p>
                             <a onclick="history.back()">Kembali </a>
                         </div>

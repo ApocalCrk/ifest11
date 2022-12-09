@@ -31,7 +31,7 @@
                     <div class="inner-wrap">
                         <!--Form Title-->
                         <div class="auth-head">
-                            <h2>Informatics Festival #10</h2>
+                            <h2>Informatics Festival #11</h2>
                             <p>Silahkan masuk ke akun anda</p>
                             <a href="daftar">Saya tidak punya akun</a>
                         </div>

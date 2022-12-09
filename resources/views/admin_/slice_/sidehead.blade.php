@@ -138,10 +138,7 @@
                 <span></span>
             </label>
         </div>
-        <a class="menu-item is-flex">
-            <i data-feather="bell"></i>
-        </a>
-        <a class="menu-item is-flex">
+        <a class="menu-item is-flex right-panel-trigger" data-panel="activity-panel">
             <i data-feather="grid"></i>
         </a>
     </div>
@@ -179,7 +176,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{env('APP_URL')}}/su_admin/hck" id="hck-sidebar-menu" data="hck" class="hint--success hint--bubble hint--top" data-hint="hck">
+                <a href="{{env('APP_URL')}}/su_admin/hck" id="hck-sidebar-menu" data="hck" class="hint--success hint--bubble hint--top" data-hint="hackathon">
                     <div class="h-icon is-success is-rounded">
                         <i data-feather="users"></i>
                     </div>

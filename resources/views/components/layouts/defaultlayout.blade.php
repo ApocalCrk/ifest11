@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Informatics Festival #10</title>
+        <title>Informatics Festival #11</title>
         <!-- <link rel="stylesheet" href="{{ asset('landingpage_/css/bootstrap.min.css') }}"> -->
         <!-- <link rel="stylesheet" href="{{ asset('landingpage_/css/custom.css') }}"> -->
         <link rel="stylesheet" href="{{ asset('landingpage_/css/app.css') }}">
