@@ -227,6 +227,37 @@
                                     </div>
                                 </div>
                                 <div class="column is-12">
+                                    <div class="field">
+                                        <label>Aktivasikan Kompetisi</label>
+                                        <div class="control">
+                                            <div class="h-select">
+                                                <div class="select-box">
+                                                    <span id="current_status"></span>
+                                                </div>
+                                                <div class="select-icon">
+                                                    <i data-feather="chevron-down"></i>
+                                                </div>
+                                                <div class="select-drop has-slimscroll-sm">
+                                                    <div class="drop-inner">
+                                                        <div class="option-row">
+                                                            <input type="radio" value="1" name="status">
+                                                            <div class="option-meta">
+                                                                <span>Aktif</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option-row">
+                                                            <input type="radio" value="0" name="status">
+                                                            <div class="option-meta">
+                                                                <span>Tidak Aktif</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-12">
                                     <p>
                                         N.B: Kosongkan jumlah anggota tim jika jenis lomba solo.
                                     </p>
@@ -246,6 +277,11 @@
     <script>
         $(document).on("click", "#edit-event", function () {
             var event = $(this).data('event');
+            if(event.cm_soon == 1){
+                var status = "Aktif";
+            }else{
+                var status = "Tidak Aktif";
+            }
             var start_regis = new Date(event.start_regis);
             var close_regis = new Date(event.close_regis);
             var dateTimeLocalValue_start = (new Date(start_regis.getTime() - start_regis.getTimezoneOffset() * 60000).toISOString()).slice(0, -1);
@@ -258,6 +294,7 @@
             $('#current_type').text(event.event_type);
             $('input[name="max_member"]').val(event.max_member);
             $('input[name="price"]').val(event.price);
+            $('#current_status').text(status);
         });
 
         $(document).ready(function () {
@@ -273,7 +310,6 @@
             rupiah.value = formatRupiah(this.value, 'Rp. ');
         });
         
-        /* Fungsi */
         function formatRupiah(angka, prefix){
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split    = number_string.split(','),

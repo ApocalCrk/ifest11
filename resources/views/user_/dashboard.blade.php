@@ -113,7 +113,7 @@
                                                         @foreach($timeline as $item)
                                                         <!--Timeline item-->
                                                         <div class="timeline-item">
-                                                            <div class="timeline-icon is-squared {{ $rand_color[array_rand($rand_color)] }}">
+                                                            <div class="timeline-icon is-squared {{ $rand_color[rand(0,4)] }}">
                                                                 <i data-feather="{{$item->icon}}"></i>
                                                             </div>
                                                             <div class="timeline-content">
@@ -142,25 +142,18 @@
                                 </div>
 
                                 <div class="column is-4">
-                                    <div class="widget picker-widget">
+                                    <div class="widget picker-widget" style="height: 280px">
                                         <div class="widget-toolbar">
                                             <div class="left">
-                                                <a class="action-icon">
-                                                    <i data-feather="chevron-left"></i>
-                                                </a>
                                             </div>
                                             <div class="center">
-                                                <h3>Mei 2022</h3>
+                                                <h3 class="date"></h3>
                                             </div>
-                                            <div class="right">
-                                                <a class="action-icon">
-                                                    <i data-feather="chevron-right"></i>
-                                                </a>
-                                            </div>
+                                            <div class="right"></div>
                                         </div>
                                         <table class="calendar">
 
-                                            <thead>
+                                            <thead class="hari">
 
                                                 <tr>
 
@@ -176,67 +169,7 @@
 
                                             </thead>
 
-                                            <tbody>
-
-                                                <tr>
-                                                    <td class="prev-month">24</td>
-                                                    <td class="prev-month">25</td>
-                                                    <td>26</td>
-                                                    <td>27</td>
-                                                    <td>28</td>
-                                                    <td>29</td>
-                                                    <td>30</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>2</td>
-                                                    <td>3</td>
-                                                    <td>4</td>
-                                                    <td>5</td>
-                                                    <td>6</td>
-                                                    <td>7</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>8</td>
-                                                    <td>9</td>
-                                                    <td>10</td>
-                                                    <td>11</td>
-                                                    <td>12</td>
-                                                    <td>13</td>
-                                                    <td>14</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>15</td>
-                                                    <td>16</td>
-                                                    <td>17</td>
-                                                    <td>18</td>
-                                                    <td>19</td>
-                                                    <td>20</td>
-                                                    <td>21</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>22</td>
-                                                    <td>23</td>
-                                                    <td>24</td>
-                                                    <td>25</td>
-                                                    <td>26</td>
-                                                    <td>27</td>
-                                                    <td>28</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>29</td>
-                                                    <td>30</td>
-                                                    <td>31</td>
-                                                    <td class="next-month">1</td>
-                                                    <td class="next-month">2</td>
-                                                    <td class="next-month">3</td>
-                                                    <td class="next-month">4</td>
-                                                </tr>
+                                            <tbody class="tanggal">
 
                                             </tbody>
 
@@ -255,60 +188,61 @@
             </div>
         </div>
     </div>
+    <!-- create hint css -->
     <script>
         $(document).ready(function(){
+            generateCalendar(moment().month(), moment().year());
+            getToday();
             var welcomeGauge = bb.generate({
-            data: {
-            columns: [["Profil", 100]],
-            type: "gauge",
-            onclick: function onclick(d, i) {
-                console.log("onclick", d, i);
-            },
-            onover: function onover(d, i) {
-                console.log("onover", d, i);
-            },
-            onout: function onout(d, i) {
-                console.log("onout", d, i);
-            }
-            },
-            gauge: {
-            label: {
-                // return empty string
-                extents: function extents() {
-                return "";
+                data: {
+                columns: [["Profil", 100]],
+                type: "gauge",
+                onclick: function onclick(d, i) {
+                    console.log("onclick", d, i);
+                },
+                onover: function onover(d, i) {
+                    console.log("onover", d, i);
+                },
+                onout: function onout(d, i) {
+                    console.log("onout", d, i);
                 }
-            }
-            },
-            color: {
-            pattern: [themeColors.danger, themeColors.green],
-            threshold: {
-                values: [70, 100]
-            }
-            },
-            size: {
-            height: 90,
-            width: 90
-            },
-            padding: {
-            bottom: 0
-            },
-            legend: {
-            show: false,
-            position: "inset"
-            },
-            bindto: "#welcome-gauge"
-        });
-        setTimeout(function () {
-            welcomeGauge.load({
-            columns: [["Profil", 0]]
+                },
+                gauge: {
+                label: {
+                    extents: function extents() {
+                    return "";
+                    }
+                }
+                },
+                color: {
+                pattern: [themeColors.danger, themeColors.green],
+                threshold: {
+                    values: [70, 100]
+                }
+                },
+                size: {
+                height: 90,
+                width: 90
+                },
+                padding: {
+                bottom: 0
+                },
+                legend: {
+                show: false,
+                position: "inset"
+                },
+                bindto: "#welcome-gauge"
             });
-        }, 1000);
-        setTimeout(function () {
-            welcomeGauge.load({
-            columns: [["Profil", "{{ round((100/count(Schema::getColumnListing('users'))) * (count(Schema::getColumnListing('users')) - $nullvalue), 0) }}"]]
-            });
-        }, 2000);
+            setTimeout(function () {
+                welcomeGauge.load({
+                columns: [["Profil", 0]]
+                });
+            }, 1000);
+            setTimeout(function () {
+                welcomeGauge.load({
+                columns: [["Profil", "{{ round((100/count(Schema::getColumnListing('users'))) * (count(Schema::getColumnListing('users')) - $nullvalue), 0) }}"]]
+                });
+            }, 2000);
         })
-
     </script>
 </x-layouts.app>

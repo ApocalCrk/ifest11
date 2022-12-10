@@ -1089,3 +1089,56 @@ var link = document.referrer;
 
 $('.history').text(link.split("/").pop().toUpperCase());
 $('.history-link').attr('href', link);
+
+function generateCalendar(month, year) {
+    $(".date").html(moment().format('MMMM YYYY'));
+    var firstDay = new Date(year, month).getDay();
+    var daysInMonth = 32 - new Date(year, month, 32).getDate();
+    var lastDay = new Date(year, month, daysInMonth).getDay();
+    var daysInLastMonth = 32 - new Date(year, month - 1, 32).getDate();
+    var day = 1;
+    var html = '<tr>';
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j <= 6; j++) {
+            if (i === 0) {
+                if (j < firstDay) {
+                    html += '<td class="prev-month">' + (daysInLastMonth - firstDay + j + 1) + '</td>';
+                } else {
+                    html += '<td>' + day + '</td>';
+                    day++;
+                }
+            } else if (i > 3) {
+                if (day > daysInMonth) {
+                    html += '<td class="next-month">' + (day - daysInMonth) + '</td>';
+                    day++;
+                } else {
+                    html += '<td>' + day + '</td>';
+                    day++;
+                }
+            } else {
+                html += '<td>' + day + '</td>';
+                day++;
+            }
+            if (j === 6) {
+                html += '</tr>';
+                if (day > daysInMonth) {
+                    break;
+                } else {
+                    html += '<tr>';
+                }
+            }
+        }
+        if (day > daysInMonth) {
+            break;
+        }
+    }
+    $(".tanggal").html(html);
+}
+
+function getToday() {
+    $(".tanggal td").each(function () {
+        if ($(this).text() == new Date().getDate() && $(this).hasClass("prev-month") == false) {
+            $(this).addClass("today");
+        }
+    });
+}
