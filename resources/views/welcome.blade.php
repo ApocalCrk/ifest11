@@ -19,7 +19,7 @@
                 <img src="{{ asset('images/atma_jaya5050.png') }}" class="icon_ifst" alt="uajy">
             </a>
             <a href="https://v3.himaforka-uajy.org" target="_blank">
-                <img src="{{ asset('images/himaforka5050.png') }}" class="icon_ifst" alt="himaforka">
+                <img src="https://v3.himaforka-uajy.org/assets/images/logo.png" class="icon_ifst" alt="himaforka">
             </a>
             <a href="https://ifest.uajy.ac.id">
                 <img src="{{ asset('images/ifest.png') }}" class="icon_ifst" alt="ifest">
