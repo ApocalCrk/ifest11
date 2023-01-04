@@ -70,6 +70,13 @@
                                                     <h3>{{ $data_tim->team_name }}</h3>
                                                     <p>{{ $data_tim->event->event_name }}</p>
                                                 </div>
+                                                @if($data_tim->status == '0' && $count_task == count($task_team))
+                                                <div class="dropdown is-spaced is-dots is-right">
+                                                    <span class="dark-inverted hint--top hint--rounded hint--bounce" id="mn-verif" aria-label="Minta Verifikasi Tim" data-id_team="{{ $data_tim->team_id }}" data-id_event="{{ $data_tim->id_event }}" data-message="Tim meminta verifikasi!">
+                                                        <i data-feather="send"></i>
+                                                    </span>
+                                                </div>
+                                                @endif
                                             </div>
 
                                             <div class="project-files">
@@ -145,7 +152,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -679,7 +685,6 @@
     @if(session('danger'))
         <script>
             $(document).ready(function () {
-                //Notyf Toasts Configuration
                 notyf = new Notyf({
                     duration: 3000,
                     position: {
@@ -695,7 +700,7 @@
                         text: ''
                     }
                     }]
-                }); //Notyf Toasts Demos
+                });
                 notyf.open({
                     type: "error",
                     message: "{{ session('danger') }}"
@@ -703,4 +708,84 @@
             });
         </script>
     @endif
+    <script>
+        $('#mn-verif').click(function() {
+            var message = $(this).data('message');
+            var id_team = $(this).data('id_team');
+            var id_event = $(this).data('id_event');
+            $.ajax({
+                url: "{{env('APP_URL')}}/user/regis_event/{{ $data_tim->id_event }}/request/verif",
+                type: "POST",
+                data: {
+                    id_team: id_team,
+                    id_event: id_event,
+                    message: message,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    if(data == 200){
+                        notyf = new Notyf({
+                            duration: 3000,
+                            position: {
+                            x: 'right',
+                            y: 'bottom'
+                            },
+                            types: [{
+                            type: 'green',
+                            background: themeColors.green,
+                            icon: {
+                                className: 'fas fa-check',
+                                tagName: 'i',
+                                text: ''
+                            }
+                            }]
+                        });
+                        notyf.success("Permintaan verifikasi berhasil dikirim");
+                    }else if(data == "invalid"){
+                        notyf = new Notyf({
+                            duration: 3000,
+                            position: {
+                            x: 'right',
+                            y: 'bottom'
+                            },
+                            types: [{
+                            type: 'error',
+                            background: themeColors.error,
+                            icon: {
+                                className: 'fas fa-exclamation-triangle',
+                                tagName: 'i',
+                                text: ''
+                            }
+                            }]
+                        });
+                        notyf.open({
+                            type: "error",
+                            message: "Permintaan verifikasi sudah dikirim!"
+                        });
+                    }else{
+                        notyf = new Notyf({
+                            duration: 3000,
+                            position: {
+                            x: 'right',
+                            y: 'bottom'
+                            },
+                            types: [{
+                            type: 'error',
+                            background: themeColors.error,
+                            icon: {
+                                className: 'fas fa-exclamation-triangle',
+                                tagName: 'i',
+                                text: ''
+                            }
+                            }]
+                        });
+                        notyf.open({
+                            type: "error",
+                            message: "Permintaan verifikasi gagal dikirim"
+                        });
+                    }
+                }
+            });
+        })
+    </script>
 </x-layouts.app>

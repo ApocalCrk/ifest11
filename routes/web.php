@@ -73,6 +73,7 @@ Route::prefix('user')
             Route::delete('/regis_event/{event}/delete_task_tmp', [UserController::class, 'delete_task_tmp']);
             Route::post('/regis_event/{event}/save_task', [UserController::class, 'save_task']);
             Route::delete('/regis_event/{event}/delete_task', [UserController::class, 'delete_task']);
+            Route::post('/regis_event/{event}/request/verif', [UserController::class, 'request_verif']);
             // profil
             Route::get('/profil', [UserController::class, 'profil']);
             Route::patch('/edit_profil', [UserController::class, 'edit_profil']);

@@ -35,6 +35,53 @@
                                 <i data-feather="grid"></i>
                             </a>
                             @endif
+
+                            <div class="toolbar-notifications is-hidden-mobile">
+                                <div class="dropdown is-spaced is-dots is-right dropdown-trigger">
+                                    <div class="is-trigger" aria-haspopup="true">
+                                        <i data-feather="bell"></i>
+                                        @if(count($notification) > 0)
+                                        <span class="new-indicator pulsate"></span>
+                                        @endif
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="heading">
+                                                <div class="heading-left">
+                                                    <h6 class="heading-title">Notifikasi</h6>
+                                                </div>
+                                                <!-- <div class="heading-right">
+                                                    <a class="notification-link" href="admin-profile-notifications.html">See all</a>
+                                                </div> -->
+                                            </div>
+                                            <ul class="notification-list">
+                                                @foreach($notification as $notif)
+                                                <li>
+                                                    <a class="notification-item" href="{{env('APP_URL')}}/su_admin/{{$notif->id_event}}/team/{{ $notif->id_team }}">
+                                                        <div class="img-left">
+                                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="{{ asset('storage/'.$notif->event->image_event) }}"/>
+                                                        </div>
+                                                        <div class="user-content">
+                                                            <p class="user-info"><span class="name">{{ $notif->team->team_name }}</span> {{ $notif->message }}</p>
+                                                            <p class="time">
+                                                                <time class="is-relative">{{ $notif->created_at->diffForHumans() }}</time>
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                                @if(count($notification) == 0)
+                                                    <li>
+                                                        <div class="user-content">
+                                                            <p class="user-info">Tidak ada notifikasi</p>
+                                                        </div>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -50,7 +97,7 @@
                                                     @if($filter == '1')
                                                         Terverifikasi
                                                     @elseif($filter == '0')
-                                                        Belum Terverifikasi
+                                                        Belum Terverifikasi / Menunggu Verifikasi
                                                     @elseif($filter == 'bl')
                                                         Blacklist/Mengundurkan diri
                                                     @endif
@@ -82,7 +129,7 @@
                                                     <form action="{{env('APP_URL')}}/su_admin/i2c/0" id="nonverif_team" method="get"></form>
                                                     <input type="radio" onclick="$('#nonverif_team').submit()" name="grid_filter">
                                                     <div class="option-meta">
-                                                        <span>Belum Terverifikasi</span>
+                                                        <span>Belum Terverifikasi / Menunggu Verifikasi</span>
                                                     </div>
                                                 </div>
                                                 <div class="option-row">
@@ -123,25 +170,29 @@
                                                     <div class="flex-head">
                                                         <div class="meta">
                                                             <span class="dark-inverted">
+                                                                @php
+                                                                    $task_count = 0;
+                                                                    $alltask = count($task_event);
+                                                                @endphp
+                                                                @foreach($task_team as $task)
+                                                                    @if($task->team_id == $team->team_id)
+                                                                        @php
+                                                                            $task_count += 1;
+                                                                        @endphp
+                                                                    @endif
+                                                                @endforeach
                                                                 @if($team->status == 1)
                                                                     Terverifikasi
                                                                 @elseif($team->status == 0)
-                                                                    Belum Terverifikasi
+                                                                    @if($task_count == $count_task)
+                                                                        Menunggu Verifikasi
+                                                                    @else
+                                                                        Belum Terverifikasi
+                                                                    @endif
                                                                 @else
                                                                     Mengundurkan Diri/Blacklist
                                                                 @endif
                                                             </span>
-                                                            @php
-                                                                $task_count = 0;
-                                                                $alltask = count($task_event);
-                                                            @endphp
-                                                            @foreach($task_team as $task)
-                                                                @if($task->team_id == $team->team_id)
-                                                                    @php
-                                                                        $task_count += 1;
-                                                                    @endphp
-                                                                @endif
-                                                            @endforeach
                                                             <span>{{ $alltask - $task_count }} Task Tersisa</span>
                                                         </div>
                                                         <div class="status-icon 

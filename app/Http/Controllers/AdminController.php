@@ -11,11 +11,14 @@ use App\Models\Task;
 use App\Models\EventTeam;
 use App\Models\User;
 use App\Models\Timeline;
+use App\Models\Notificatioon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Verification;
 
 
 class AdminController extends Controller
@@ -31,14 +34,17 @@ class AdminController extends Controller
         $staffs = User::where('user_type', 'staff')->get();
         $not_verified = EventTeam::where('status', '0')->count();
         $timeline = Timeline::where('start', '<=', now())->where('close', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
-        return view('admin_.dashboard', compact('staffs', 'nw_pdft', 'i2c', 'wdc', 'hck', 'semnas', 'activity', 'not_verified', 'timeline'));
+        $detail_task = Detail_task::all();
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.dashboard', compact('staffs', 'nw_pdft', 'i2c', 'wdc', 'hck', 'semnas', 'activity', 'not_verified', 'timeline', 'detail_task', 'notification'));
     }
 
     // profil
     public function profil(){
         $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
         $staffs = User::where('user_type', 'staff')->get();
-        return view('admin_.profil.index', compact('staffs', 'activity'));
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.profil.index', compact('staffs', 'activity', 'notification'));
     }
     
     public function edit_profil(Request $request){
@@ -68,7 +74,9 @@ class AdminController extends Controller
         $team_event = EventTeam::where('id_event', $event)->orderBy('created_at', 'DESC')->paginate(8);
         $task_team = Task::where('id_event', $event)->get();
         $task_event = Detail_task::where('event_id', $event)->get();
-        return view('admin_.'.$event.'.index', compact('staffs', 'activity', 'team_event', 'task_team', 'task_event'));
+        $count_task = Detail_task::where('event_id', $event)->where('condition_task', NULL)->count();
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.'.$event.'.index', compact('staffs', 'activity', 'team_event', 'task_team', 'task_event', 'count_task', 'notification'));
     }
     
     public function filter_index($event, $filter){
@@ -77,7 +85,9 @@ class AdminController extends Controller
         $team_event = EventTeam::where('id_event', $event)->where('status', $filter)->orderBy('created_at', 'DESC')->paginate(8);
         $task_team = Task::where('id_event', $event)->get();
         $task_event = Detail_task::where('event_id', $event)->get();
-        return view('admin_.'.$event.'.index', compact('staffs', 'activity', 'team_event', 'task_team', 'task_event', 'filter'));
+        $count_task = Detail_task::where('event_id', $event)->where('condition_task', NULL)->count();
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.'.$event.'.index', compact('staffs', 'activity', 'team_event', 'task_team', 'task_event', 'filter', 'count_task', 'notification'));
     }
 
     // detail data
@@ -95,7 +105,8 @@ class AdminController extends Controller
             }
         }
         $anggota_team = TeamMember::where('team_id', $team_id)->where('id_event', $event)->get();
-        return view('admin_.'.$event.'.detail', compact('staffs', 'activity', 'anggota_team', 'data_team', 'task_team', 'task_type'));
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.'.$event.'.detail', compact('staffs', 'activity', 'anggota_team', 'data_team', 'task_team', 'task_type', 'notification'));
     }
 
     // verifikasi/blacklist/hapus tim
@@ -107,6 +118,13 @@ class AdminController extends Controller
                 'activity' => '<a href="'.env('APP_URL').'/su_admin/'.$event.'/team/'.$team_id.'">Memverifikasi Tim</a>',
                 'icon' => 'check'
             ]);
+            // send to email team
+            $team = EventTeam::where('team_id', $team_id)->where('id_event', $event)->first();
+            $email = $team->owner->email;
+            $subject = 'Verifikasi Tim';
+            $message = 'Tim anda telah diverifikasi oleh admin';
+            Mail::to($email)->send(new Verification($email));
+            Notificatioon::where('id_team', $team_id)->where('id_event', $event)->delete();
             return redirect()->back();
         }elseif($type == 'batal_verif'){
             EventTeam::where('team_id', $team_id)->where('id_event', $event)->update(['status' => '0']);
@@ -172,13 +190,15 @@ class AdminController extends Controller
         $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
         $staffs = User::where('user_type', 'staff')->get();
         $users = User::where('user_type', 'superuser')->orWhere('user_type', 'staff')->get();
-        return view('admin_.users.index', compact('staffs', 'activity', 'users'));
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.users.index', compact('staffs', 'activity', 'users', 'notification'));
     }
 
     public function add_user(){
         $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
         $staffs = User::where('user_type', 'staff')->get();
-        return view('admin_.users.add', compact('staffs', 'activity'));
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.users.add', compact('staffs', 'activity', 'notification'));
     }
 
     public function store_user(Request $request){
@@ -247,7 +267,8 @@ class AdminController extends Controller
         $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
         $staffs = User::where('user_type', 'staff')->get();
         $events = AllEvent::all();
-        return view('admin_.pengaturan.index', compact('staffs', 'activity', 'events'));
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.pengaturan.index', compact('staffs', 'activity', 'events', 'notification'));
     }
 
     public function edit_event(Request $request){

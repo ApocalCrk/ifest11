@@ -24,4 +24,8 @@ class EventTeam extends Model
     public function team_member(){
         return $this->belongsTo(TeamMember::class, 'team_id', 'team_id');
     }
+
+    public function task(){
+        return $this->hasMany(Task::class, 'team_id', 'team_id');
+    }
 }

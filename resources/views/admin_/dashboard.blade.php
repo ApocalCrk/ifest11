@@ -33,6 +33,52 @@
                                 <i data-feather="grid"></i>
                             </a>
                             @endif
+                            <div class="toolbar-notifications is-hidden-mobile">
+                                <div class="dropdown is-spaced is-dots is-right dropdown-trigger">
+                                    <div class="is-trigger" aria-haspopup="true">
+                                        <i data-feather="bell"></i>
+                                        @if(count($notification) > 0)
+                                        <span class="new-indicator pulsate"></span>
+                                        @endif
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="heading">
+                                                <div class="heading-left">
+                                                    <h6 class="heading-title">Notifikasi</h6>
+                                                </div>
+                                                <!-- <div class="heading-right">
+                                                    <a class="notification-link" href="admin-profile-notifications.html">See all</a>
+                                                </div> -->
+                                            </div>
+                                            <ul class="notification-list">
+                                                @foreach($notification as $notif)
+                                                <li>
+                                                    <a class="notification-item" href="{{env('APP_URL')}}/su_admin/{{$notif->id_event}}/team/{{ $notif->id_team }}">
+                                                        <div class="img-left">
+                                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="{{ asset('storage/'.$notif->event->image_event) }}"/>
+                                                        </div>
+                                                        <div class="user-content">
+                                                            <p class="user-info"><span class="name">{{ $notif->team->team_name }}</span> {{ $notif->message }}</p>
+                                                            <p class="time">
+                                                                <time class="is-relative">{{ $notif->created_at->diffForHumans() }}</time>
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                                @if(count($notification) == 0)
+                                                    <li>
+                                                        <div class="user-content">
+                                                            <p class="user-info">Tidak ada notifikasi</p>
+                                                        </div>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -70,7 +116,21 @@
                                                         <div class="media-flex-center">
                                                             <div class="flex-meta">
                                                                 <span>{{ $pdf->team_name . ' - ' . $pdf->event->event_name}}</span>
-                                                                <span>{{ $pdf->created_at }}</span>
+                                                                <span>{{ $pdf->created_at }}
+                                                                    @php
+                                                                        $count = 0;
+                                                                        foreach($detail_task as $dt){
+                                                                            if($dt->event_id == $pdf->id_event && $dt->condition_task == NULL){
+                                                                                $count++;
+                                                                            }
+                                                                        }
+                                                                    @endphp
+                                                                    @if($pdf->task->count() == $count)
+                                                                        <span class="tag is-light">
+                                                                            Menunggu Verifikasi
+                                                                        </span>
+                                                                    @endif
+                                                                </span>
                                                             </div>
                                                             <div class="flex-end">
                                                                 <i data-feather="chevron-right"></i>

@@ -1,3 +1,5 @@
+// const { http } = require("laravel-mix/src/HotReloading");
+
 var env = 'development'; 
 
 var themeColors = {
@@ -863,6 +865,7 @@ function initDarkMode() {
   $('.dark-mode input').on('change', function () {
     if ($(this).prop('checked') === true) {
       $('html, body').removeClass('is-dark');
+      getToday("light");
       $('.theme-image').each(function () {
         var imageUrl = $(this).attr('data-light');
         $(this).attr('src', imageUrl);
@@ -870,6 +873,7 @@ function initDarkMode() {
       setThemeToLocalStorage('light');
     } else {
       $('html, body').addClass('is-dark');
+      getToday("dark");
       $('.theme-image').each(function () {
         var imageUrl = $(this).attr('data-dark');
         $(this).attr('src', imageUrl);
@@ -1135,10 +1139,17 @@ function generateCalendar(month, year) {
     $(".tanggal").html(html);
 }
 
-function getToday() {
+function getToday(value) {
     $(".tanggal td").each(function () {
         if ($(this).text() == new Date().getDate() && $(this).hasClass("prev-month") == false) {
-            $(this).addClass("today");
+            if(value == 'dark'){
+              $(this).addClass("today-dark");
+              $(this).removeClass("today-light");
+              
+            }else{
+              $(this).addClass("today-light");
+              $(this).removeClass("today-dark");
+            }
         }
     });
 }

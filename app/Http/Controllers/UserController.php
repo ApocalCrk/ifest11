@@ -13,6 +13,7 @@ use App\Models\RulesBook;
 use App\Models\Task;
 use App\Models\TmpFile;
 use App\Models\Timeline;
+use App\Models\Notificatioon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
@@ -115,7 +116,7 @@ class UserController extends Controller
         if($event_dt == null){
             return abort(404);
         }
-        if(now() >= $event_dt->start_regis && now() <= $event_dt->close_regis){
+        if(now() >= $event_dt->start_regis && now() <= $event_dt->close_regis && $event_dt->status != 1){
             if($this->nullvalue == 0){
                 if(EventTeam::where('owner_id', Auth::user()->id)->where('id_event', $event)->first()){
                     return redirect()->back()->with('info', 'Kamu sudah mendaftar dalam lomba ini!');
@@ -126,7 +127,7 @@ class UserController extends Controller
                 return redirect()->back();
             }
         }else{
-            return redirect('/user/events')->with('info', 'Pendaftaran kompetisi ini telah tutup!');
+            return redirect('/user/events')->with('info', 'Pendaftaran kompetisi ini telah tutup atau belum dibuka!');
         }
     }
 
@@ -331,6 +332,20 @@ class UserController extends Controller
         }
     }
 
+    public function request_verif(Notificatioon $notif, Request $request){
+        $check  = Notificatioon::where('id_event', $request->id_event)->where('id_team', $request->id_team)->first();
+        if($check){
+            return "invalid";
+        }else{
+            Notificatioon::create([
+                'id_event' => $request->id_event,
+                'id_team' => $request->id_team,
+                'message' => $request->message,
+            ]);
+            return 200;
+        }
+    }
+
     // all regis event
     public function regis_event(){
         if(EventTeam::where('owner_id', Auth::user()->id)->first() == null){
@@ -359,7 +374,8 @@ class UserController extends Controller
                 }
             }
         }
-        return view('user_.regis_event.detail_regis', compact('data_tim', 'anggota_team', 'task_type', 'task_team', 'event_dt'));
+        $count_task = Detail_task::where('event_id', $event)->where('condition_task', NULL)->count();
+        return view('user_.regis_event.detail_regis', compact('data_tim', 'anggota_team', 'task_type', 'task_team', 'event_dt', 'count_task'));
     }
 
 
