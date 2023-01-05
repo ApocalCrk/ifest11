@@ -1,4 +1,4 @@
-@section('title', 'Pendaftaran CP')
+@section('title', 'Pendaftaran hck')
 <x-layouts.app>
     <form action="{{ route('logout') }}" method="post" class="is-hidden" id="logout">@csrf</form>
     <div id="ifst-app" class="app-wrapper">
@@ -17,7 +17,7 @@
                     <div class="page-title has-text-centered">
 
                         <div class="title-wrap">
-                            <h1 class="title is-4">CP</h1>
+                            <h1 class="title is-4">hck</h1>
                         </div>
 
                         <div class="toolbar ml-auto">
@@ -34,13 +34,13 @@
                     <div class="page-content-inner">
 
                         <!--Form Layout 1-->
-                        <form method="post" action="{{env('APP_URL')}}/user/events/cp/registed_team" class="form-layout" id="confirm_cp">
+                        <form method="post" action="{{env('APP_URL')}}/user/events/hck/registed_team" class="form-layout" id="confirm_hck">
                             @csrf
                             <div class="form-outer">
                                 <div class="form-header stuck-header">
                                     <div class="form-header-inner">
                                         <div class="left">
-                                            <h3>Pendaftaran CP</h3>
+                                            <h3>Pendaftaran hck</h3>
                                         </div>
                                         <div class="right">
                                             <div class="buttons">
@@ -50,7 +50,7 @@
                                                         </span>
                                                     <span>Kembali</span>
                                                 </a>
-                                                <a onclick="initConfirm('Konfirmasi Data', 'Apakah data sudah benar? Data yang telah dimasukkan tidak bisa diubah kembali.', false, false, 'Daftar', 'Batal', function (closeEvent) {$('#confirm_cp').submit();})" type="submit" id="save-button" class="button h-button is-primary is-raised">
+                                                <a onclick="initConfirm('Konfirmasi Data', 'Apakah data sudah benar? Data yang telah dimasukkan tidak bisa diubah kembali.', false, false, 'Daftar', 'Batal', function (closeEvent) {$('#confirm_hck').submit();})" type="submit" id="save-button" class="button h-button is-primary is-raised">
                                                     <span class="icon">
                                                         <i class="lnir lnir-pencil"></i>
                                                     </span>
