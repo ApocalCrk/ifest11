@@ -1,4 +1,4 @@
-@section('title', 'dcr')
+@section('title', 'Donor Darah')
 <x-layouts.app>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <form action="{{ route('logout') }}" method="post" class="is-hidden" id="logout">@csrf</form>
