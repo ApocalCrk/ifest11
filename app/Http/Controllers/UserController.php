@@ -70,7 +70,7 @@ class UserController extends Controller
                 $nullvalue += 1;
             }
         }
-        $timeline = Timeline::where('start', '<=', now())->where('close', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
+        $timeline = Timeline::where('start', '>=', now())->where('close', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
         return view('user_.dashboard', compact('nullvalue', 'data_lomba', 'timeline'));
     }
 
@@ -132,7 +132,7 @@ class UserController extends Controller
     }
 
     public function regist_team($event, Request $request){
-        if($event == 'wdc' || $event == 'cp'){
+        if($event == 'wdc' || $event == 'hck'){
             $request->validate([
                 'team_name' => ['required', 'unique:event_team'],
                 'asal_ins' => ['required'],
@@ -332,10 +332,14 @@ class UserController extends Controller
         }
     }
 
-    public function request_verif(Notificatioon $notif, Request $request){
+    public function request_verif(Request $request){
         $check  = Notificatioon::where('id_event', $request->id_event)->where('id_team', $request->id_team)->first();
         if($check){
-            return "invalid";
+            if(now()->diffInHours($check->created_at) > 24){
+                $check->delete();
+            }else{
+                return 'invalid';
+            }
         }else{
             Notificatioon::create([
                 'id_event' => $request->id_event,

@@ -33,7 +33,7 @@ class AdminController extends Controller
         $nw_pdft = EventTeam::orderBy('created_at', 'desc')->limit(5)->get();
         $staffs = User::where('user_type', 'staff')->get();
         $not_verified = EventTeam::where('status', '0')->count();
-        $timeline = Timeline::where('start', '<=', now())->where('close', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
+        $timeline = Timeline::where('start', '>=', now())->where('close', '>=', now())->orderBy('start', 'ASC')->limit(5)->get();
         $detail_task = Detail_task::all();
         $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
         return view('admin_.dashboard', compact('staffs', 'nw_pdft', 'i2c', 'wdc', 'hck', 'semnas', 'activity', 'not_verified', 'timeline', 'detail_task', 'notification'));

@@ -213,7 +213,6 @@
                                                     $rand_color = ['is-primary', 'is-info', 'is-success', 'is-orange', 'is-yellow']
                                                 @endphp
                                                 @foreach($timeline as $item)
-                                                <!--Timeline item-->
                                                 <div class="timeline-item">
                                                     <div class="timeline-icon is-squared {{ $rand_color[array_rand($rand_color)] }}">
                                                         <i data-feather="{{$item->icon}}"></i>
