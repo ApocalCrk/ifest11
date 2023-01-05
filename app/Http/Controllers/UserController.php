@@ -23,6 +23,7 @@ class UserController extends Controller
 {
 
     private $nullvalue;
+    private $user;
 
     public function __construct(){
         $this->middleware(function ($request, $next) {
