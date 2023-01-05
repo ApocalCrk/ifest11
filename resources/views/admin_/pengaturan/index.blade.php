@@ -123,6 +123,22 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    <div class="list-view-item">
+                                        <div class="list-view-item-inner">
+                                            <div class="meta-left">
+                                                <h3>
+                                                    <span>TIMELINE</span>
+                                                </h3>
+                                            </div>
+                                            <div class="meta-right">
+                                                <div class="buttons">
+                                                    <a class="button h-button is-primary is-raised is-hidden-mobile" href="{{env('APP_URL')}}/su_admin/pengaturan_web/timeline">Ubah</a>
+                                                        
+                                                    <a class="button h-button is-primary is-raised is-hidden-desktop is-hidden-tablet" href="{{env('APP_URL')}}/su_admin/pengaturan_web/timeline">Ubah</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--List Item-->
                                     @foreach($events as $event_delete)
                                     <div class="list-view-item">
@@ -134,7 +150,7 @@
                                             </div>
                                             <div class="meta-right">
                                                 <div class="buttons">
-                                                    <form action="/delete_event/{{ $event_delete->event_code }}" id="event_code_{{ $event_delete->event_code }}" method="post">
+                                                    <form action="{{env('APP_URL')}}/su_admin/delete_event/{{ $event_delete->event_code }}" id="event_code_{{ $event_delete->event_code }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
@@ -275,7 +291,7 @@
                                 </div>
                                 <div class="column is-12">
                                     <div class="field">
-                                        <label>Aktivasikan Kompetisi</label>
+                                        <label>Coming Soon</label>
                                         <div class="control">
                                             <div class="h-select">
                                                 <div class="select-box">
@@ -287,13 +303,13 @@
                                                 <div class="select-drop has-slimscroll-sm">
                                                     <div class="drop-inner">
                                                         <div class="option-row">
-                                                            <input type="radio" value="1" name="status">
+                                                            <input type="radio" value="1" name="cm_soon">
                                                             <div class="option-meta">
                                                                 <span>Aktif</span>
                                                             </div>
                                                         </div>
                                                         <div class="option-row">
-                                                            <input type="radio" value="0" name="status">
+                                                            <input type="radio" value="0" name="cm_soon">
                                                             <div class="option-meta">
                                                                 <span>Tidak Aktif</span>
                                                             </div>

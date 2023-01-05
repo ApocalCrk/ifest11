@@ -280,8 +280,7 @@ class AdminController extends Controller
             'description' => ['required'],
             'price' => ['required'],
         ]);
-        $default_type = $event->event_type;
-        if($request->event_type == 'Tim' || $default_type == 'Tim'){
+        if($request->event_type == 'Tim'){
             $request->validate([
                 'max_member' => ['required']
             ]);
@@ -297,7 +296,7 @@ class AdminController extends Controller
             }
         }else{
             $data = request()->except('_method', '_token');
-            $data['max_member'] = 0;
+            $data['max_member'] = NULL;
             $data['event_type'] = "Solo";
             if($request->image_event != null){
                 unlink(storage_path('app/public/'.$event->image_event));
@@ -316,6 +315,54 @@ class AdminController extends Controller
         unlink(storage_path('app/public/'.$data->image_event));
         AllEvent::where('event_code', $event)->delete();
         return redirect('/su_admin/pengaturan_web')->with('notif', 'Kompetisi/Event berhasil dihapus!');
+    }
+
+    // TIMELINE
+    public function timeline(){
+        $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
+        $staffs = User::where('user_type', 'staff')->get();
+        $events = AllEvent::all();
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        $timeline = Timeline::all();
+        return view('admin_.pengaturan.timeline.index', compact('staffs', 'activity', 'events', 'notification', 'timeline'));
+    }
+
+    public function get_timeline($id){
+        $timeline = Timeline::where('id', $id)->first();
+        return response()->json($timeline);
+    }
+
+    public function add_timeline(Request $request){
+        $request->validate([
+            'timeline' => ['required'],
+            'start' => ['required'],
+            'close' => ['required'],
+            'icon' => ['required']
+        ]);
+        Timeline::create([
+            'timeline' => $request->timeline,
+            'start' => $request->start,
+            'close' => $request->close,
+            'icon' => $request->icon
+        ]);
+        return redirect('/su_admin/pengaturan_web/timeline')->with('notif', 'Timeline berhasil ditambah!');
+    }
+
+    public function edit_timeline(Request $request){
+        $request->validate([
+            'timeline' => ['required'],
+            'start' => ['required'],
+            'close' => ['required'],
+            'icon' => ['required']
+        ]);
+        $data = request()->except('_method', '_token');
+        Timeline::where('id', $request->id)->update($data);
+        return redirect('/su_admin/pengaturan_web/timeline')->with('notif', 'Timeline berhasil diubah!');
+    }
+
+    public function delete_timeline($id){
+        Timeline::destroy($id);
+        return redirect('/su_admin/pengaturan_web/timeline')->with('notif', 'Timeline berhasil dihapus!');
     }
 
 }

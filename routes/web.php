@@ -33,6 +33,12 @@ Route::prefix('su_admin')
             Route::get('/pengaturan_web', [AdminController::class, 'settings']);
             Route::patch('/edit-event', [AdminController::class, 'edit_event']);
             Route::delete('/delete_event/{event}', [AdminController::class, 'delete_event']);
+            //timeline
+            Route::get('/pengaturan_web/timeline', [AdminController::class, 'timeline']);
+            Route::get('/get_timeline/{id}', [AdminController::class, 'get_timeline']);
+            Route::post('/pengaturan_web/timeline/add_timeline', [AdminController::class, 'add_timeline']);
+            Route::patch('/pengaturan_web/timeline/edit_timeline', [AdminController::class, 'edit_timeline']);
+            Route::delete('/pengaturan_web/timeline/delete_timeline/{timeline}', [AdminController::class, 'delete_timeline']);
         });
 
 // Super User & Staff Access

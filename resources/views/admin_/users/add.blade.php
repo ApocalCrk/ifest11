@@ -237,14 +237,14 @@
                                             </div>
                                             <div class="column is-12">
                                                 <div class="field">
-                                                    <label>Aktifasi Akun</label>
+                                                    <label>Aktivasi Akun</label>
                                                     <div class="control">
                                                         <label class="form-switch is-primary">
                                                             <input type="checkbox" name="email_verified_at" class="is-switch" checked>
                                                             <i></i>
                                                         </label>
                                                     </div>
-                                                    <label>Note: Aktifasi akun merupakan cara untuk melakukan verifikasi akun di mana jika di hidupkan akun akan langsung aktif tanpa melakukan verifikasi dari email.</label>
+                                                    <label>Note: Aktivasi akun merupakan cara untuk melakukan verifikasi akun di mana jika di hidupkan akun akan langsung aktif tanpa melakukan verifikasi dari email.</label>
                                                 </div>
                                             </div>
                                         </div>

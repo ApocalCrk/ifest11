@@ -10,4 +10,6 @@ class Timeline extends Model
     use HasFactory;
 
     protected $table = 'timeline';
+
+    protected $fillable = ['timeline', 'start', 'close', 'icon'];
 }

@@ -11,7 +11,7 @@ class AllEvent extends Model
 
     protected $table = 'event_perio';
 
-    protected $fillable = ['event_name', 'description', 'price', 'task_event_code', 'event_type', 'start_regis', 'close_regis'];
+    protected $fillable = ['event_name', 'description', 'price', 'task_event_code', 'event_type', 'start_regis', 'close_regis', 'cm_soon', 'image_event'];
 
     public function task(){
         return $this->belongsTo(Detail_task::class, 'event_id', 'task_event_code');

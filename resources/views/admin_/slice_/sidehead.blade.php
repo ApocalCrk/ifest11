@@ -20,64 +20,41 @@
                 <div class="navbar-item has-dropdown is-notification is-hidden-tablet is-hidden-desktop">
                     <a class="navbar-link is-arrowless" href="javascript:void(0);">
                         <i data-feather="bell"></i>
-                        <span class="new-indicator pulsate"></span>
+                        @if(count($notification) > 0)
+                            <span class="new-indicator pulsate"></span>
+                        @endif
                     </a>
                     <div class="navbar-dropdown is-boxed is-right">
                         <div class="heading">
                             <div class="heading-left">
-                                <h6 class="heading-title">Notifications</h6>
+                                <h6 class="heading-title">Notifikasi</h6>
                             </div>
-                            <!-- <div class="heading-right">
-                                <a class="notification-link" href="#">See all</a>
-                            </div> -->
                         </div>
                         <div class="inner has-slimscroll">
 
                             <ul class="notification-list">
-                                <li>
-                                    <a class="notification-item">
-                                        <div class="img-left">
-                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="assets/img/avatars/photos/7.jpg" />
-                                        </div>
+                                @foreach($notification as $notif)
+                                    <li>
+                                        <a class="notification-item" href="{{env('APP_URL')}}/su_admin/{{$notif->id_event}}/team/{{ $notif->id_team }}">
+                                            <div class="img-left">
+                                                <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="{{ asset('storage/'.$notif->event->image_event) }}"/>
+                                            </div>
+                                            <div class="user-content">
+                                                <p class="user-info"><span class="name">{{ $notif->team->team_name }}</span> {{ $notif->message }}</p>
+                                                <p class="time">
+                                                    <time class="is-relative">{{ $notif->created_at->diffForHumans() }}</time>
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                                @if(count($notification) == 0)
+                                    <li>
                                         <div class="user-content">
-                                            <p class="user-info"><span class="name">Alice C.</span> left a comment.</p>
-                                            <p class="time">1 hour ago</p>
+                                            <p class="user-info">Tidak ada notifikasi</p>
                                         </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="notification-item">
-                                        <div class="img-left">
-                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="assets/img/avatars/photos/12.jpg" />
-                                        </div>
-                                        <div class="user-content">
-                                            <p class="user-info"><span class="name">Joshua S.</span> uploaded a file.</p>
-                                            <p class="time">2 hours ago</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="notification-item">
-                                        <div class="img-left">
-                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="assets/img/avatars/photos/13.jpg" />
-                                        </div>
-                                        <div class="user-content">
-                                            <p class="user-info"><span class="name">Tara S.</span> sent you a message.</p>
-                                            <p class="time">2 hours ago</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="notification-item">
-                                        <div class="img-left">
-                                            <img class="user-photo" alt="" src="https://via.placeholder.com/150x150" data-demo-src="assets/img/avatars/photos/25.jpg" />
-                                        </div>
-                                        <div class="user-content">
-                                            <p class="user-info"><span class="name">Melany W.</span> left a comment.</p>
-                                            <p class="time">3 hours ago</p>
-                                        </div>
-                                    </a>
-                                </li>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -164,13 +141,13 @@
                     </div>
                 </a>
             </li>
-            <!-- <li>
-                <a href="{{env('APP_URL')}}/su_admin/semnas" id="semnas-sidebar-menu-mobile" data="semnas" class="hint--error hint--bubble hint--top" data-hint="SEMNAS">
+            <li>
+                <a href="{{env('APP_URL')}}/su_admin/dcr" id="cdr-sidebar-menu-mobile" data="dcr" class="hint--error hint--bubble hint--top" data-hint="dcr">
                     <div class="h-icon is-danger is-rounded">
                         <i data-feather="users"></i>
                     </div>
                 </a>
-            </li> -->
+            </li>
             @if(Auth::user()->user_type == 'superuser' && Auth::user()->email != 'adminph@gmail.com')
             <li>
                 <a href="{{env('APP_URL')}}/su_admin/users" id="users-sidebar-menu-mobile" data="users" class="hint--default hint--bubble hint--top" data-hint="USER">
@@ -244,19 +221,19 @@
                 </a>
             </li>
             <li>
-                <a href="{{env('APP_URL')}}/su_admin/hck" id="hck-sidebar-menu" data="hck" class="hint--success hint--bubble hint--top" data-hint="hackathon">
+                <a href="{{env('APP_URL')}}/su_admin/hck" id="hck-sidebar-menu" data="hck" class="hint--success hint--bubble hint--top" data-hint="Hackathon">
                     <div class="h-icon is-success is-rounded">
                         <i data-feather="users"></i>
                     </div>
                 </a>
             </li>
-            <!-- <li>
-                <a href="{{env('APP_URL')}}/su_admin/semnas" id="semnas-sidebar-menu" data="semnas" class="hint--error hint--bubble hint--top" data-hint="SEMNAS">
+            <li>
+                <a href="{{env('APP_URL')}}/su_admin/dcr" id="dcr-sidebar-menu" data="dcr" class="hint--error hint--bubble hint--top" data-hint="Donor Darah">
                     <div class="h-icon is-danger is-rounded">
                         <i data-feather="users"></i>
                     </div>
                 </a>
-            </li> -->
+            </li>
             @if(Auth::user()->user_type == 'superuser' && Auth::user()->email != 'adminph@gmail.com')
             <li>
                 <a href="{{env('APP_URL')}}/su_admin/users" id="users-sidebar-menu" data="users" class="hint--default hint--bubble hint--top" data-hint="USER">

@@ -102,7 +102,7 @@
                                 <span class="icon">
                                         <i class="fas fa-plus"></i>
                                     </span>
-                                <span>Add User</span>
+                                <span>Tambah User</span>
                             </a>
                         </div>
                     </div>
