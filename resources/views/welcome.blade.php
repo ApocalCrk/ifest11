@@ -45,7 +45,6 @@
                             <a href="daftar" class="text-white btn_fst_log_reg ms-4">Daftar</a>
                         @endif
                     </div>
-                    <!-- donor darah button -->
                     <div class="btn_log_reg d-flex justify-content-center">
                         <a href="donor_darah" class="text-white btn_fst_log_reg">Donor Darah</a>
                     </div>
