@@ -11,7 +11,7 @@ class Notificatioon extends Model
 
     protected $table = 'notification';
 
-    protected $fillable = ['id_team', 'id_event', 'message'];
+    protected $fillable = ['id', 'id_team', 'id_event', 'message'];
 
     public function team(){
         return $this->belongsTo(EventTeam::class, 'id_team', 'team_id');

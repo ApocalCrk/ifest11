@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 Use App\Http\Controllers\UserController;
+use App\Http\Controllers\DonorDarahController;
+use App\Models\DonorDarah;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,9 @@ Use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/donor_darah', [DonorDarahController::class, 'index']);
+Route::post('/daftar_donor_darah', [DonorDarahController::class, 'store']);
 
 // Super User Access
 Route::prefix('su_admin')
@@ -46,6 +51,10 @@ Route::prefix('su_admin')
         ->middleware('auth','admin')
         ->group(function(){
             Route::get('/dashboard', [AdminController::class, 'dashboard']);
+            // donor darah
+            Route::get('/donor_darah', [AdminController::class, 'index_donor_darah']);
+            Route::get('/donor_darah/detail/{donor_darah}', [AdminController::class, 'detail_donor_darah']);
+            Route::get('/donor_darah/export', [AdminController::class, 'export_donor_darah']);
             // event
             Route::get('/{event}', [AdminController::class, 'index_event']);
             Route::get('/{event}/{filter}', [AdminController::class, 'filter_index']);

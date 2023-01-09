@@ -142,7 +142,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{env('APP_URL')}}/su_admin/dcr" id="cdr-sidebar-menu-mobile" data="dcr" class="hint--error hint--bubble hint--top" data-hint="dcr">
+                <a href="{{env('APP_URL')}}/su_admin/donor_darah" id="cdr-sidebar-menu-mobile" data="dcr" class="hint--error hint--bubble hint--top" data-hint="dcr">
                     <div class="h-icon is-danger is-rounded">
                         <i data-feather="users"></i>
                     </div>
@@ -228,7 +228,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{env('APP_URL')}}/su_admin/dcr" id="dcr-sidebar-menu" data="dcr" class="hint--error hint--bubble hint--top" data-hint="Donor Darah">
+                <a href="{{env('APP_URL')}}/su_admin/donor_darah" id="dcr-sidebar-menu" data="dcr" class="hint--error hint--bubble hint--top" data-hint="Donor Darah">
                     <div class="h-icon is-danger is-rounded">
                         <i data-feather="users"></i>
                     </div>

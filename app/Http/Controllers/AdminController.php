@@ -12,6 +12,7 @@ use App\Models\EventTeam;
 use App\Models\User;
 use App\Models\Timeline;
 use App\Models\Notificatioon;
+use App\Models\DonorDarah;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
@@ -19,6 +20,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Verification;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DonorDarahExport;
 
 
 class AdminController extends Controller
@@ -88,6 +91,26 @@ class AdminController extends Controller
         $count_task = Detail_task::where('event_id', $event)->where('condition_task', NULL)->count();
         $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
         return view('admin_.'.$event.'.index', compact('staffs', 'activity', 'team_event', 'task_team', 'task_event', 'filter', 'count_task', 'notification'));
+    }
+
+    public function index_donor_darah(){
+        $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
+        $staffs = User::where('user_type', 'staff')->get();
+        $donor_darah = DonorDarah::orderBy('created_at', 'DESC')->get();
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.dcr.index', compact('staffs', 'activity', 'donor_darah', 'notification'));
+    }
+
+    public function detail_donor_darah($id){
+        $activity = Admin_activity::orderBy('created_at', 'DESC')->limit(10)->get();
+        $staffs = User::where('user_type', 'staff')->get();
+        $donor_darah = DonorDarah::find($id);
+        $notification = Notificatioon::orderBy('created_at', 'DESC')->limit(5)->get();
+        return view('admin_.dcr.detail', compact('staffs', 'activity', 'donor_darah', 'notification'));
+    }
+
+    public function export_donor_darah(){
+        return Excel::download(new DonorDarahExport, 'data_donor_darah.xlsx');
     }
 
     // detail data

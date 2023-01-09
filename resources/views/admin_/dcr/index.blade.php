@@ -82,169 +82,95 @@
                         </div>
                     </div>
 
-                    <div class="user-grid-toolbar">
+                    <div class="columns">
+                        <div class="column is-12">
+                            <div class="buttons">
+                                <a class="button is-primary is-rounded is-elevated" id="user_num_btn1" href="{{env('APP_URL')}}/su_admin/donor_darah/export">
+                                    <span class="icon">
+                                        <i data-feather="download"></i>
+                                    </span>
+                                    <span>Export Data Donor Darah</span>
+                                </a>
+                            </div>
 
-                        <div class="buttons">
-                            <div class="field">
-                                <div class="control">
-                                    <div class="h-select">
-                                        <div class="select-box">
-                                            <span>
-                                                @if(isset($filter))
-                                                    @if($filter == '1')
-                                                        Terverifikasi
-                                                    @elseif($filter == '0')
-                                                        Belum Terverifikasi / Menunggu Verifikasi
-                                                    @elseif($filter == 'bl')
-                                                        Blacklist/Mengundurkan diri
-                                                    @endif
-                                                @else
-                                                    Semua
-                                                @endif
-                                            </span>
-                                        </div>
-                                        <div class="select-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                        </div>
-                                        <div class="select-drop has-slimscroll-sm">
-                                            <div class="drop-inner">
-                                                <div class="option-row">
-                                                    <form action="{{env('APP_URL')}}/su_admin/dcr" id="semua_team" method="get"></form>
-                                                    <input type="radio" onclick="$('#semua_team').submit()" name="grid_filter">
-                                                    <div class="option-meta">
-                                                        <span>Semua</span>
-                                                    </div>
-                                                </div>
-                                                <div class="option-row">
-                                                    <form action="{{env('APP_URL')}}/su_admin/dcr/1" id="verif_team" method="get"></form>
-                                                    <input type="radio" onclick="$('#verif_team').submit()" name="grid_filter">
-                                                    <div class="option-meta">
-                                                        <span>Terverifikasi</span>
-                                                    </div>
-                                                </div>
-                                                <div class="option-row">
-                                                    <form action="{{env('APP_URL')}}/su_admin/dcr/0" id="nonverif_team" method="get"></form>
-                                                    <input type="radio" onclick="$('#nonverif_team').submit()" name="grid_filter">
-                                                    <div class="option-meta">
-                                                        <span>Belum Terverifikasi / Menunggu Verifikasi</span>
-                                                    </div>
-                                                </div>
-                                                <div class="option-row">
-                                                    <form action="{{env('APP_URL')}}/su_admin/dcr/bl" id="bl_team" method="get"></form>
-                                                    <input type="radio" onclick="$('#bl_team').submit()" name="grid_filter">
-                                                    <div class="option-meta">
-                                                        <span>Blacklist/Mengundurkan diri</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            <div class="flex-table-wrapper">
+                                <table class="ui celled table" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="has-text-centered">No</th>
+                                            <th class="has-text-centered">Nama</th>
+                                            <th class="has-text-centered">Email</th>
+                                            <th class="has-text-centered">No. Telp</th>
+                                            <th class="has-text-centered">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($donor_darah as $d)
+                                        <tr>
+                                            <td class="has-text-centered">{{ $loop->iteration }}</td>
+                                            <td class="has-text-centered">{{ $d->nama }}</td>
+                                            <td class="has-text-centered">{{ $d->email }}</td>
+                                            <td class="has-text-centered">{{ $d->no_hp }}</td>
+                                            <td class="has-text-centered">
+                                                <a class="button is-info is-rounded is-elevated" id="user_num_btn1" href="{{env('APP_URL')}}/su_admin/donor_darah/detail/{{ $d->id }}">
+                                                    <span class="icon">
+                                                        <i data-feather="eye"></i>
+                                                    </span>
+                                                    <span>Detail</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                </table>
                             </div>
                         </div>
+
                     </div>
 
-                    <div class="page-content-inner">
-                        <div class="user-grid user-grid-v2">
-
-                            <!--List Empty Search Placeholder -->
-                            <div class="page-placeholder custom-text-filter-placeholder is-hidden">
-                                <div class="placeholder-content">
-                                    <h3>Kami tidak dapat menemukan hasil yang cocok.</h3>
-                                    <p class="is-larger">Sepertinya kami tidak dapat menemukan hasil yang cocok untuk
-                                         istilah pencarian yang Anda masukkan. Silakan coba istilah atau kriteria pencarian yang berbeda .</p>
-                                </div>
-                            </div>
-
-                            <div class="columns is-multiline">
-
-                                <!--Grid item-->
-                                @if(count($team_event) > 0)
-                                    @foreach($team_event as $team)
-                                        <div class="column is-3">
-                                            <div class="grid-item-wrap">
-                                                <div class="grid-item-head">
-                                                    <div class="flex-head">
-                                                        <div class="meta">
-                                                            <span class="dark-inverted">
-                                                                @php
-                                                                    $task_count = 0;
-                                                                    $alltask = count($task_event);
-                                                                @endphp
-                                                                @foreach($task_team as $task)
-                                                                    @if($task->team_id == $team->team_id)
-                                                                        @php
-                                                                            $task_count += 1;
-                                                                        @endphp
-                                                                    @endif
-                                                                @endforeach
-                                                                @if($team->status == 1)
-                                                                    Terverifikasi
-                                                                @elseif($team->status == 0)
-                                                                    @if($task_count == $count_task)
-                                                                        Menunggu Verifikasi
-                                                                    @else
-                                                                        Belum Terverifikasi
-                                                                    @endif
-                                                                @else
-                                                                    Mengundurkan Diri/Blacklist
-                                                                @endif
-                                                            </span>
-                                                            <span>{{ $alltask - $task_count }} Task Tersisa</span>
-                                                        </div>
-                                                        <div class="status-icon 
-                                                            @if($team->status == 1)
-                                                                is-success
-                                                            @elseif($team->status == 0)
-                                                                is-warning
-                                                            @else
-                                                                is-danger
-                                                            @endif
-                                                        ">
-                                                            <i class="
-                                                            @if($team->status == 1)
-                                                                fas fa-check
-                                                            @elseif($team->status == 0)
-                                                                fas fa-spinner
-                                                            @else
-                                                                fas fa-times
-                                                            @endif"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="buttons">
-                                                        <a href="{{env('APP_URL')}}/su_admin/dcr/team/{{ $team->team_id }}#task-tab" class="button h-button is-dark-outlined" style="width: 100%;">
-                                                            <span class="icon">
-                                                                    <i data-feather="check-circle"></i>
-                                                                </span>
-                                                            <span>Tasks</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="grid-item">
-                                                    <h3 class="dark-inverted" data-filter-match>{{ $team->team_name }}</h3>
-                                                    <p data-filter-match>{{ $team->owner->fullname }}</p>
-                                                    <div class="buttons mt-2">
-                                                        <a href="{{env('APP_URL')}}/su_admin/dcr/team/{{ $team->team_id }}" class="button h-button is-dark-outlined">
-                                                            <span>Lihat Data</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="page-placeholder custom-text-filter-placeholder">
-                                        <div class="placeholder-content">
-                                            <h3>Data tidak tersedia.</h3>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                            {{ $team_event->links('vendor.pagination.tailwind') }}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <style>
+        .ui.celled.table tbody tr td {
+            color: #000000BC;
+        }
+    </style>
+
+
+    <!-- addons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.8/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.semanticui.min.css">
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.semanticui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.8/semantic.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable(
+                {
+                    "pagingType": "full_numbers",
+                    "lengthMenu": [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    "responsive": true,
+                    "searching": true,
+                    "search": {
+                        "search": "",
+                        "smart": true,
+                        "regex": false,
+                        "caseInsensitive": true
+                    },
+                    "language": {
+                        "search": "_INPUT_",
+                        "searchPlaceholder": "Cari",
+                    },
+                    
+                }
+            );
+            $('.dataTables_filter').find('span').removeClass('ui input');
+        });
+    </script>
 </x-layouts.app>

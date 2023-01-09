@@ -9,7 +9,7 @@
         <div class="infraloader is-active"></div>
         @include('admin_/slice_/sidehead')
 
-        <div class="view-wrapper" data-naver-offset="406" data-menu-item="#users-sidebar-menu" data-mobile-item="#users-sidebar-menu-mobile">
+        <div class="view-wrapper" data-naver-offset="465" data-menu-item="#users-sidebar-menu" data-mobile-item="#users-sidebar-menu-mobile">
 
             <div class="page-content-wrapper">
                 <div class="page-content is-relative">

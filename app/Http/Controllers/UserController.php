@@ -338,11 +338,19 @@ class UserController extends Controller
         if($check){
             if(now()->diffInHours($check->created_at) > 24){
                 $check->delete();
+                Notificatioon::create([
+                    'id' => now()->timestamp+rand(1, 10000),
+                    'id_event' => $request->id_event,
+                    'id_team' => $request->id_team,
+                    'message' => $request->message,
+                ]);
+                return 200;
             }else{
                 return 'invalid';
             }
         }else{
             Notificatioon::create([
+                'id' => now()->timestamp+rand(1, 10000),
                 'id_event' => $request->id_event,
                 'id_team' => $request->id_team,
                 'message' => $request->message,
@@ -382,6 +390,4 @@ class UserController extends Controller
         $count_task = Detail_task::where('event_id', $event)->where('condition_task', NULL)->count();
         return view('user_.regis_event.detail_regis', compact('data_tim', 'anggota_team', 'task_type', 'task_team', 'event_dt', 'count_task'));
     }
-
-
 }
