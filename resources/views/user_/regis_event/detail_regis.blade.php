@@ -167,7 +167,7 @@
                                                 <div class="flex-meta">
                                                     <span>{{$data_tim->owner->fullname}}</span>
                                                     <span>( Pemimpin Tim )</span>
-                                                    <span style="font-family: 'Roboto',sans-serif;color: #a2a5b9;font-size: .9rem">{{$data_tim->owner->email}}</span>
+                                                    <span style="font-family: 'Roboto',sans-serif;color: #a2a5b9;font-size: .9rem">{{$data_tim->owner->no_telpon}}</span>
                                                 </div>
                                                 <div class="dropdown is-spaced is-dots is-right end-action is-hidden-mobile" style="right: 70px!important;position: absolute;">
                                                     <div class="is-trigger h-modal-trigger modal-member" data-modal="modal-member-view" data-member="{{ $data_tim->owner }}">
@@ -188,7 +188,7 @@
                                                     </div>
                                                     <div class="flex-meta">
                                                         <span>{{$anggota->nama_anggota}}</span>
-                                                        <span>{{$anggota->email}}</span>
+                                                        <span>{{$anggota->no_telp}}</span>
                                                     </div>
                                                     <div class="dropdown is-spaced is-dots is-right end-action is-hidden-mobile" style="right: 70px!important;position: absolute;">
                                                         <div class="is-trigger h-modal-trigger modal-member" data-modal="modal-member-view" data-member="{{ $anggota }}">
@@ -534,6 +534,15 @@
                                     <div class="danger-text">ID Line anggota tim wajib diisi!</div>
                                 @enderror
                             </div>
+                            <div class="field">
+                                <label>Instagram</label>
+                                <div class="control">
+                                    <input type="text" name="instagram" class="input @error('instagram') is-validate @enderror" value="{{old('instagram')}}" placeholder="Masukkan Instagram" required>
+                                </div>
+                                @error('instagram')
+                                    <div class="danger-text">Instagram anggota tim wajib diisi!</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -610,6 +619,12 @@
                                     <input type="text" name="id_line_detail" class="input" disabled>
                                 </div>
                             </div>
+                            <div class="field">
+                                <label>Instagram</label>
+                                <div class="control">
+                                    <input type="text" name="instagram_detail" class="input" disabled>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -633,6 +648,8 @@
                 $('input[name="tgl_lahir_detail"]').val(data_detail.tgl_lahir);
                 $('input[name="no_telp_detail"]').val(data_detail.no_telpon);
                 $('input[name="id_line_detail"]').val(data_detail.id_line);
+                $('input[name="id_line_detail"]').val(data_detail.id_line);
+                $('input[name="instagram_detail"]').val(data_detail.instagram);
             }else{
                 $('.detail_text').text('Detail Anggota');
                 $('.asal-ins').show();
@@ -645,6 +662,7 @@
                 $('input[name="tgl_lahir_detail"]').val(data_detail.tgl_lahir);
                 $('input[name="no_telp_detail"]').val(data_detail.no_telp);
                 $('input[name="id_line_detail"]').val(data_detail.id_line);
+                $('input[name="instagram_detail"]').val(data_detail.instagram);
             }
         })
         

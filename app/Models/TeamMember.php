@@ -11,5 +11,5 @@ class TeamMember extends Model
 
     protected $table = 'team_member';
 
-    protected $fillable = ['id_event', 'team_id', 'nama_anggota', 'no_iden', 'email', 'no_telp', 'id_line', 'tgl_lahir', 'asal_ins', 'alamat_ins'];
+    protected $fillable = ['id_event', 'team_id', 'nama_anggota', 'no_iden', 'email', 'no_telp', 'id_line', 'instagram', 'tgl_lahir', 'asal_ins', 'alamat_ins'];
 }

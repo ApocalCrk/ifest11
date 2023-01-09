@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('nomor_id', 50)->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->string('id_line')->nullable();
+            $table->string('instagram')->nullable();
             $table->string('no_telpon')->nullable();
             $table->text('alamat')->nullable();
             $table->rememberToken();

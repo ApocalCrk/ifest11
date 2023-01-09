@@ -113,14 +113,14 @@
                                     <!--Fieldset-->
                                     <div class="form-fieldset">
                                         <div class="fieldset-heading">
-                                            <h4>Informasi Pendamping Tim</h4>
-                                            <p>Lengkapi informasi pendamping tim anda. (Tidak Wajib)</p>
+                                            <h4>Informasi Dosen Pendamping Tim</h4>
+                                            <p>Lengkapi informasi Dosen pendamping tim anda. (Tidak Wajib)</p>
                                         </div>
 
                                         <div class="columns is-multiline">
                                             <div class="column is-12">
                                                 <div class="field">
-                                                    <label>Nama Pendamping Tim</label>
+                                                    <label>Nama Dosen Pendamping Tim</label>
                                                     <div class="control has-icon">
                                                         <input type="text" name="nama_pendamping" class="input @error('nama_pendamping') is-validate @enderror" placeholder="" value="{{ old('nama_pendamping') }}">
                                                         <div class="form-icon">

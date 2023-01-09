@@ -118,7 +118,7 @@
                                                 <!--Field-->
                                                 <div class="column is-12">
                                                     <div class="field">
-                                                        <label>Nomor Telpon</label>
+                                                        <label>Nomor Telpon (WhatsApp)</label>
                                                         <div class="control has-icon">
                                                             <input type="text" class="input" value="{{ Auth::user()->no_telpon }}" disabled>
                                                             <div class="form-icon">
@@ -142,7 +142,19 @@
                                                 <!--Field-->
                                                 <div class="column is-12">
                                                     <div class="field">
-                                                        <label>Nomor Identitas</label>
+                                                        <label>Instagram</label>
+                                                        <div class="control has-icon">
+                                                            <input type="text" class="input" value="{{ Auth::user()->instagram }}" disabled>
+                                                            <div class="form-icon">
+                                                                <i data-feather="instagram"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Field-->
+                                                <div class="column is-12">
+                                                    <div class="field">
+                                                        <label>Nomor Identitas (NISN/NIM)</label>
                                                         <div class="control has-icon">
                                                             <input type="text" class="input" value="{{ Auth::user()->nomor_id }}" disabled>
                                                             <div class="form-icon">
@@ -314,7 +326,7 @@
                                                 <!--Field-->
                                                 <div class="column is-12">
                                                     <div class="field">
-                                                        <label>Nomor Telpon</label>
+                                                        <label>Nomor Telpon (WhatsApp)</label>
                                                         <div class="control has-icon">
                                                             <input type="number" name="no_telpon" class="input @error('no_telpon') is-invalid @enderror" value="{{ Auth::user()->no_telpon }}" required>
                                                             <div class="form-icon">
@@ -341,10 +353,24 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+                                                <div class="column is-12">
+                                                    <div class="field">
+                                                        <label>Instagram</label>
+                                                        <div class="control has-icon">
+                                                            <input type="text" name="instagram" class="input @error('instagram') is-invalid @enderror" value="{{ Auth::user()->instagram }}" required>
+                                                            <div class="form-icon">
+                                                                <i data-feather="smartphone"></i>
+                                                            </div>
+                                                        </div>
+                                                        @error('instagram')
+                                                            <div class="danger-text">Instagram wajib diisi!</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                                 <!--Field-->
                                                 <div class="column is-12">
                                                     <div class="field">
-                                                        <label>Nomor Identitas</label>
+                                                        <label>Nomor Identitas (NISN/NIM)</label>
                                                         <div class="control has-icon">
                                                             <input type="text" name="nomor_id" class="input @error('nomor_id') is-invalid @enderror" value="{{ Auth::user()->nomor_id }}" required>
                                                             <div class="form-icon">

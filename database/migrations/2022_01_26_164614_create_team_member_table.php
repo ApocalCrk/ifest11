@@ -22,6 +22,7 @@ class CreateTeamMemberTable extends Migration
             $table->string('email');
             $table->string('no_telp', 13);
             $table->string('id_line');
+            $table->string('instagram');
             $table->date('tgl_lahir');
             $table->timestamps();
         });

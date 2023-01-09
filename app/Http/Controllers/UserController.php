@@ -32,6 +32,9 @@ class UserController extends Controller
             if($datacheck->id_line == null){
                 $this->nullvalue += 1;
             }
+            if($datacheck->instagram == null){
+                $this->nullvalue += 1;
+            }
             if($datacheck->nomor_id == null){
                 $this->nullvalue += 1;
             }
@@ -56,6 +59,9 @@ class UserController extends Controller
         $data_lomba = EventTeam::where('owner_id', Auth::user()->id)->get();
         foreach($datacheck as $row){
             if($row->id_line == null){
+                $nullvalue += 1;
+            }
+            if($row->instagram == null){
                 $nullvalue += 1;
             }
             if($row->nomor_id == null){
@@ -85,6 +91,7 @@ class UserController extends Controller
             'fullname' => ['required', 'string', 'max:255'],
             'no_telpon' => ['required', 'numeric'],
             'id_line' => ['required'],
+            'instagram' => ['required'],
             'tgl_lahir' => ['required', 'date'],
             'nomor_id' => ['required'],
             'alamat' => ['required'],
@@ -199,6 +206,7 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'no_telp' => ['required'],
             'id_line' => ['required'],
+            'instagram' => ['required'],
             'tgl_lahir' => ['required'],
         ]);
         if($event == 'wdc'){
@@ -217,6 +225,7 @@ class UserController extends Controller
                     'alamat_ins' => $request->alamat_ins,
                     'no_telp' => $request->no_telp,
                     'id_line' => $request->id_line,
+                    'instagram' => $request->instagram,
                     'tgl_lahir' => $request->tgl_lahir,
                 ]);
             }else{
@@ -230,6 +239,7 @@ class UserController extends Controller
                     'alamat_ins' => $tim->alamat_ins,
                     'no_telp' => $request->no_telp,
                     'id_line' => $request->id_line,
+                    'instagram' => $request->instagram,
                     'tgl_lahir' => $request->tgl_lahir,
                 ]);
             }
@@ -242,6 +252,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'no_telp' => $request->no_telp,
                 'id_line' => $request->id_line,
+                'instagram' => $request->instagram,
                 'tgl_lahir' => $request->tgl_lahir,
             ]);
         }

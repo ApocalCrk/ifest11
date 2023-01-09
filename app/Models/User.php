@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'tgl_lahir',
         'foto',
         'id_line',
+        'instagram',
         'no_telpon',
         'alamat',
         'email_verified_at'

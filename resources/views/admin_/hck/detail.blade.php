@@ -290,7 +290,7 @@
                                             <div class="flex-meta">
                                                 <span>{{$data_team->owner->fullname}}</span>
                                                 <span>( Pemimpin Tim )</span>
-                                                <span style="font-family: 'Roboto',sans-serif;color: #a2a5b9;font-size: .9rem">{{$data_team->owner->email}}</span>
+                                                <span style="font-family: 'Roboto',sans-serif;color: #a2a5b9;font-size: .9rem">{{$data_team->owner->no_telpon}}</span>
                                             </div>
                                             <div class="dropdown is-spaced is-dots is-right end-action is-hidden-mobile" style="right: 70px!important;position: absolute;">
                                                 <div class="is-trigger h-modal-trigger modal-member" data-modal="modal-member-view" data-member="{{ $data_team->owner }}">
@@ -311,7 +311,7 @@
                                                 </div>
                                                 <div class="flex-meta">
                                                     <span>{{$anggota->nama_anggota}}</span>
-                                                    <span>{{$anggota->email}}</span>
+                                                    <span>{{$anggota->no_telp}}</span>
                                                 </div>
                                                 <div class="dropdown is-spaced is-dots is-right end-action is-hidden-mobile" style="right: 70px!important;position: absolute;">
                                                     <div class="is-trigger h-modal-trigger modal-member" data-modal="modal-member-view" data-member="{{ $anggota }}">
@@ -604,6 +604,12 @@
                                     <input type="text" name="id_line" class="input" disabled>
                                 </div>
                             </div>
+                            <div class="field">
+                                <label>Instagram</label>
+                                <div class="control">
+                                    <input type="text" name="instagram" class="input" disabled>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -624,6 +630,7 @@
                 $('input[name="tgl_lahir"]').val(data_detail.tgl_lahir);
                 $('input[name="no_telp"]').val(data_detail.no_telpon);
                 $('input[name="id_line"]').val(data_detail.id_line);
+                $('input[name="instagram"]').val(data_detail.instagram);
             }else{
                 $('.asal-ins').show();
                 $('.alamat-ins').show();
@@ -633,6 +640,7 @@
                 $('input[name="tgl_lahir"]').val(data_detail.tgl_lahir);
                 $('input[name="no_telp"]').val(data_detail.no_telp);
                 $('input[name="id_line"]').val(data_detail.id_line);
+                $('input[name="instagram"]').val(data_detail.instagram);
             }
         })
         var hash = location.hash.substr(1);
